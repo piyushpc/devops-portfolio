@@ -1,6 +1,51 @@
 const blogPosts = [
     {
-        date: "2026.04.16",
+    date: "2025-08-11",
+    tag: "Docker, CI/CD, Infra",
+    title: "Incorrect Image Version Deployed in Production",
+    excerpt: "Production was running outdated containers due to use of 'latest' tag, causing mismatch between UAT-tested build and deployed version.",
+    solution: "Implemented immutable versioning using dynamic tags passed via CI/CD pipeline and enforced strict image tagging in docker-compose.\n\n# docker-compose.yml\nservices:\n  pingacrm-api:\n    image: 152031363284.dkr.ecr.ap-south-1.amazonaws.com/pinga-api:${TAG}\n\n# Jenkins Deploy Step\necho \"TAG=${TAG}\" > .env\ndocker-compose down\ndocker-compose up -d\n\n# Result:\nEach deployment uses exact tested version (v1.X), enabling traceability and instant rollback.",
+    image: "",
+    link: "#"
+    },
+    {
+        date: "2025-08-13",
+        tag: "Docker, Storage, Data Safety",
+        title: "Data Loss During Container Redeployment",
+        excerpt: "User-uploaded GST files were getting lost when containers were recreated during deployments.",
+        solution: "Decoupled application data from container lifecycle using Docker volumes and persistent host mapping.\n\n# docker-compose.yml\nservices:\n  pingacrm-api:\n    volumes:\n      - ./uploads:/app/wwwroot/uploads\n\n# Result:\nContainer recreation does not impact uploaded data, eliminating need for manual backup/restore steps.",
+        image: "",
+        link: "#"
+    },
+    {
+        date: "2025-08-15",
+        tag: "Security, Infra, SSH",
+        title: "Insecure Direct Access to Production Server",
+        excerpt: "Production server was initially accessed directly, exposing it to public network risks.",
+        solution: "Implemented bastion host architecture with private subnet isolation and SSH proxying.\n\n# SSH via Bastion\nssh -i key.pem -J ubuntu@bastion-ip ubuntu@10.99.4.13\n\n# Jenkins Deployment Flow\nJenkins → Bastion → Private EC2 → Docker Deploy\n\n# Result:\nProduction server is no longer publicly accessible, improving security posture and compliance.",
+        image: "",
+        link: "#"
+    },
+    {
+        date: "2025-08-17",
+        tag: "Infra, Reliability, Cleanup",
+        title: "Disk Space Exhaustion Causing Deployment Failures",
+        excerpt: "Docker images and logs accumulated over time, filling disk space and causing deployment failures.",
+        solution: "Automated disk cleanup using Docker prune and scheduled maintenance jobs.\n\n# Manual Cleanup\ndocker system prune -af\n\n# Cron Job (daily cleanup)\n0 2 * * * docker system prune -af\n\n# Optional Log Cleanup\nfind /home/ubuntu/PingaCRM/logs -type f -mtime +7 -delete\n\n# Result:\nMaintained healthy disk usage, preventing deployment interruptions.",
+        image: "",
+        link: "#"
+    },
+    {
+        date: "2025-09-19",
+        tag: "Config, DevOps, Architecture",
+        title: "Configuration Dependency Inside Build Artifacts",
+        excerpt: "Production configuration was tightly coupled with build artifacts (awscompiledcode), making updates risky and inflexible.",
+        solution: "Externalized configuration from Docker image and mounted it at runtime for better flexibility.\n\n# docker-compose.yml\nservices:\n  pingacrm-api:\n    volumes:\n      - ./config/appsettings.Production.json:/app/appsettings.Production.json:ro\n\n# Folder Structure\nPingaCRM/\n├── config/\n│   └── appsettings.Production.json\n\n# Result:\nConfiguration can be updated independently without rebuilding images, enabling safer and faster changes.",
+        image: "",
+        link: "#"
+    },
+    {
+        date: "2025.11.19",
         tag: "#Jenkins #Bastion #SSH #Tunnelling #AWS EC2 #DevSecOps #CI/CD",
         title: "Secure Jenkins-to-production tunnelling through a Bastion host without exposing private infrastructure",
         excerpt: "In our CI/CD pipeline, Jenkins needs to deploy directly to a private production server (10.x.x.x) that is not publicly reachable. The only network entry point into the private subnet is a Bastion host. The challenge was establishing a reliable SSH tunnel from Jenkins through the Bastion into the private server during automated deployments — without storing raw private keys in Jenkins credentials, without leaving long-lived tunnel processes orphaned on the Bastion, and without punching unnecessary inbound rules in the production security group. Any misconfiguration risks either a complete deployment failure or, worse, an unintended exposure of the private subnet to the internet.",
@@ -9,7 +54,7 @@ const blogPosts = [
         link: "##"
     },
     {
-        date: "2025.08.29",
+        date: "2025.11.29",
         tag: "#docker #Kubernetes #AWS",
         title: "Container Crash After Deployment (Exit Code 139)",
         excerpt: "Containers start successfully but immediately crash, leading to restart loops and downtime.",
@@ -18,7 +63,7 @@ const blogPosts = [
         link: "#"
     },  
       {
-        date: "2025.08.23",
+        date: "2026.01.02",
         tag: "#AWS #Scaling #UAT #Production #Configuration",
         title: "works in UAT but fails in production",
         excerpt: "The Challenge: Application works in UAT but fails in production due to differences in configuration files (e.g., database connection strings, API keys, environment flags)",
