@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevOps Logs | Piyush Chaudhari</title>
+    <meta name="description" content="Technical blog about DevOps System Design challenges and solutions.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="terminal-header">
+        <div class="terminal-controls">
+            <span class="control red"></span>
+            <span class="control yellow"></span>
+            <span class="control green"></span>
+        </div>
+        <div class="terminal-title">piyush@devops: ~/blog</div>
+        <nav>
+            <a href="../index.html">cd ..</a>
+            <a href="#posts">ls ./posts</a>
+            <a href="admin.html" style="opacity: 0.5;">sudo</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="intro">
+            <h1 class="typing">cat system_design_challenges.txt</h1>
+            <p class="comment">// Documenting real-world DevOps hurdles and architectural solutions.</p>
+        </section>
+
+        <section id="posts" class="posts-grid">
+            <!-- Posts will be injected here by script.js -->
+        </section>
+    </main>
+
+    <footer>
+        <p>exit status: 0</p>
+        <p>&copy; 2026 Piyush Chaudhari | DevOps Architect</p>
+    </footer>
+
+    <script type="module">
+        import blogPosts from './posts.js';
+        
+        const postsGrid = document.getElementById('posts');
+        
+        blogPosts.forEach(post => {
+            const article = document.createElement('article');
+            article.className = 'post-card';
+            article.innerHTML = `
+                <div class="post-meta">
+                    <span class="date">${post.date}</span>
+                    <span class="tag">${post.tag}</span>
+                </div>
+                <h2 class="post-title">${post.title}</h2>
+                <div class="challenge-box">
+                    <h3>Challenge:</h3>
+                    <p class="post-excerpt">${post.excerpt}</p>
+                </div>
+                <div class="solution-box">
+                    <h3>Solution:</h3>
+                    <p class="post-solution">${post.solution}</p>
+                </div>
+                ${post.image ? `<div class="post-image"><img src="${post.image}" alt="Architecture Diagram"></div>` : ''}
+                <a href="${post.link}" class="read-more">read_more()</a>
+            `;
+            postsGrid.appendChild(article);
+        });
+    </script>
+    <style>
+        .challenge-box, .solution-box {
+            margin: 1.5rem 0;
+            padding-left: 1rem;
+            border-left: 2px solid #30363d;
+        }
+        .challenge-box h3, .solution-box h3 {
+            font-size: 0.9rem;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+        .post-solution {
+            color: var(--text-primary);
+        }
+        .post-image {
+            margin: 2rem 0;
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid #30363d;
+        }
+        .post-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+    </style>
+</body>
+</html>

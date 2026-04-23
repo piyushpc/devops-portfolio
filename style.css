@@ -139,6 +139,21 @@ h1, h2, h3, h4 {
 .nav-links a:hover {
     color: var(--accent-glow);
 }
+.nav-links a.blog-link {
+    background: linear-gradient(135deg, var(--accent-glow), var(--accent-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 600;
+    border: 1px solid var(--glass-border);
+    padding: 0.4rem 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+.nav-links a.blog-link:hover {
+    border-color: var(--accent-glow);
+    background: rgba(0, 242, 254, 0.1);
+    -webkit-text-fill-color: var(--accent-glow);
+}
 
 /* Hero Section */
 .hero {
