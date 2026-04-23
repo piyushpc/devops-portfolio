@@ -47,7 +47,8 @@
         
         const postsGrid = document.getElementById('posts');
         
-        blogPosts.forEach(post => {
+        // Fix: Added (post, index) to access the array index
+        blogPosts.forEach((post, index) => {
             const article = document.createElement('article');
             article.className = 'post-card';
             article.innerHTML = `
@@ -57,45 +58,33 @@
                 </div>
                 <h2 class="post-title">${post.title}</h2>
                 <div class="challenge-box">
-                    <h3>Challenge:</h3>
                     <p class="post-excerpt">${post.excerpt}</p>
                 </div>
-                <div class="solution-box">
-                    <h3>Solution:</h3>
-                    <p class="post-solution">${post.solution}</p>
+                <div class="expanded-content" id="content-${index}">
+                    <div class="solution-box">
+                        <h3>Solution:</h3>
+                        <p class="post-solution">${post.solution}</p>
+                    </div>
+                    ${post.image ? `<div class="post-image"><img src="${post.image}" alt="Architecture Diagram" style="width:100%"></div>` : ''}
                 </div>
-                ${post.image ? `<div class="post-image"><img src="${post.image}" alt="Architecture Diagram"></div>` : ''}
-                <a href="${post.link}" class="read-more">read_more()</a>
+                <button class="read-more" onclick="togglePost(${index})" id="btn-${index}">read_more()</button>
             `;
             postsGrid.appendChild(article);
         });
+
+        // Fix: Attach to window so onclick can find it (Modules are not global)
+        window.togglePost = function(index) {
+            const content = document.getElementById(`content-${index}`);
+            const btn = document.getElementById(`btn-${index}`);
+            if (content.style.display === 'block') {
+                content.style.display = 'none';
+                btn.innerText = 'read_more()';
+            } else {
+                content.style.display = 'block';
+                btn.innerText = 'show_less()';
+            }
+        };
     </script>
-    <style>
-        .challenge-box, .solution-box {
-            margin: 1.5rem 0;
-            padding-left: 1rem;
-            border-left: 2px solid #30363d;
-        }
-        .challenge-box h3, .solution-box h3 {
-            font-size: 0.9rem;
-            color: var(--accent-color);
-            margin-bottom: 0.5rem;
-            text-transform: uppercase;
-        }
-        .post-solution {
-            color: var(--text-primary);
-        }
-        .post-image {
-            margin: 2rem 0;
-            border-radius: 6px;
-            overflow: hidden;
-            border: 1px solid #30363d;
-        }
-        .post-image img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-    </style>
+
 </body>
 </html>
