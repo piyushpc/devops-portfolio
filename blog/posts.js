@@ -35,6 +35,15 @@ const blogPosts = [
         image: "",
         link: "#"
     },
+    {
+        date: "2026-04-23",
+        tag: "AWS, Cognito, Amplify, Next.js, API Gateway, Lambda, S3, CloudWatch, Serverless",
+        title: "Cold Start Latency in Lambda Impacting API Response Time",
+        excerpt: "The architecture relies on AWS Lambda (Node.js) behind API Gateway. During low traffic periods, Lambda functions go idle and introduce cold starts when invoked again. This causes increased latency (500ms–2s), impacting user experience in the Next.js application.",
+        solution: "- Enable Provisioned Concurrency for critical Lambda functions.<br>- Optimize Lambda package size (use tree-shaking, remove unused dependencies).<br>- Use Lambda@Edge or CloudFront caching for frequently accessed endpoints.<br>- Consider splitting heavy functions into smaller micro-functions.<br>- Use API Gateway caching for read-heavy APIs.",
+        image: "../assets/1753784735259.jpeg",
+        link: "#"
+    }
 
 ];
 
