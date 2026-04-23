@@ -9,7 +9,7 @@ const blogPosts = [
         link: "##"
     },
         {
-        date: "ss",
+        date: "2026.04.16",
         tag: "ss",
         title: "ss",
         excerpt: "ssss",
