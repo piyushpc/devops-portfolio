@@ -8,15 +8,24 @@ const blogPosts = [
         image: "../assets/uat-prod-cicd.png",
         link: "##"
     },
-        {
-        date: "2026.04.16",
-        tag: "ss",
-        title: "ss",
-        excerpt: "ssss",
-        solution: "ss",
-        image: "../assets/uat-prod-cicd.png",
+    {
+        date: "2025.08.29",
+        tag: "#docker #Kubernetes #AWS",
+        title: "Container Crash After Deployment (Exit Code 139)",
+        excerpt: "Containers start successfully but immediately crash, leading to restart loops and downtime.",
+        solution: "Implement log inspection and health validation steps in the pipeline. Ensure required environment variables, dependencies, and file paths are validated before container startup. Add health checks to verify application readiness.",
+        image: "",
         link: "#"
-    },
+    },  
+      {
+        date: "2025.08.23",
+        tag: "#AWS #Scaling #UAT #Production #Configuration",
+        title: "works in UAT but fails in production",
+        excerpt: "The Challenge: Application works in UAT but fails in production due to differences in configuration files (e.g., database connection strings, API keys, environment flags)",
+        solution: "Externalize configuration from the application and manage it separately using environment variables or centralized config storage. Mount only the production config into the container and validate configs before deployment.",
+        image: "",
+        link: "#"
+    },  
     {
         date: "2026.04.23",
         tag: "#AWS #Scaling",
@@ -51,6 +60,15 @@ const blogPosts = [
         excerpt: "Managing data latency in a multi-region Kubernetes setup was causing significant delays in critical applications, especially when handling real-time user requests. The geographical distribution of services across multiple regions led to inconsistent response times, which impacted user experience and performance for cloud-native applications. The root cause was traced back to inefficient communication between pods located in different regions, combined with inadequate monitoring that made it difficult to pinpoint the bottlenecks.",
         solution: "The Solution (Architectural Fix)<br>To tackle the latency issue, I implemented the following solution:<br><br>Network Optimization: We adopted a service mesh (Istio) for better traffic management, allowing us to intelligently route requests between regions based on latency metrics. The mesh also provided fine-grained control over retries, circuit breaking, and load balancing.<br><br>Kubernetes Cluster Federation: Implementing Kubernetes Federation allowed us to synchronize configurations and workloads across multiple regions, improving fault tolerance and ensuring that services in one region could be dynamically scaled based on demand in another region.<br><br>Latency Monitoring: I integrated Prometheus and Grafana to collect real-time metrics on latency between pods across regions. Alerts were configured for thresholds on response time, helping the operations team to quickly respond to any performance degradation.<br><br>Data Replication & Caching: To minimize cross-region data fetching, we used a distributed cache (Redis) and replicated critical data across regions. This significantly reduced the need for inter-region calls for frequently accessed data, lowering latency.<br><br>Impact<br><br>After implementing the solution, latency was reduced by over 30%, with real-time data processing and better resource distribution. The user experience improved, and we were able to scale our applications more effectively across regions.",
         image: "",
+        link: "#"
+    },
+    {
+        date: "2026-04-23",
+        tag: "AWS, Cognito, Amplify, Next.js, API Gateway, Lambda, S3, CloudWatch, Serverless",
+        title: "Cold Start Latency in Lambda Impacting API Response Time",
+        excerpt: "The architecture relies on AWS Lambda (Node.js) behind API Gateway. During low traffic periods, Lambda functions go idle and introduce cold starts when invoked again. This causes increased latency (500ms–2s), impacting user experience in the Next.js application.",
+        solution: "- Enable Provisioned Concurrency for critical Lambda functions.<br>- Optimize Lambda package size (use tree-shaking, remove unused dependencies).<br>- Use Lambda@Edge or CloudFront caching for frequently accessed endpoints.<br>- Consider splitting heavy functions into smaller micro-functions.<br>- Use API Gateway caching for read-heavy APIs.",
+        image: "../assets/1753784735259.jpeg",
         link: "#"
     },
     {
