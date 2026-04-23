@@ -8,6 +8,15 @@ const blogPosts = [
         image: "../assets/uat-prod-cicd.png",
         link: "##"
     },
+        {
+        date: "ss",
+        tag: "ss",
+        title: "ss",
+        excerpt: "ssss",
+        solution: "ss",
+        image: "../assets/uat-prod-cicd.png",
+        link: "#"
+    },
     {
         date: "2026.04.23",
         tag: "#AWS #Scaling",
