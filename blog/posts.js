@@ -1,5 +1,14 @@
 const blogPosts = [
     {
+        date: "2026.04.16",
+        tag: "#Jenkins #Bastion #SSH #Tunnelling #AWS EC2 #DevSecOps #CI/CD",
+        title: "Secure Jenkins-to-production tunnelling through a Bastion host without exposing private infrastructure",
+        excerpt: "In our CI/CD pipeline, Jenkins needs to deploy directly to a private production server (10.x.x.x) that is not publicly reachable. The only network entry point into the private subnet is a Bastion host. The challenge was establishing a reliable SSH tunnel from Jenkins through the Bastion into the private server during automated deployments — without storing raw private keys in Jenkins credentials, without leaving long-lived tunnel processes orphaned on the Bastion, and without punching unnecessary inbound rules in the production security group. Any misconfiguration risks either a complete deployment failure or, worse, an unintended exposure of the private subnet to the internet.",
+        solution: "1. SSH ProxyJump via Jenkins agent: Configured Jenkins to use SSH ProxyJump (-J bastion_user@bastion_ip) so the connection hops through the Bastion transparently in a single command — no manual tunnel pre-setup required.<br><br>2. Ephemeral SSH keys in AWS Secrets Manager: Private keys are stored in AWS Secrets Manager and injected at runtime into the Jenkins agent's ephemeral workspace, then deleted post-job. No keys are persisted in Jenkins credentials store.<br><br>3. Strict security group rules: The Bastion SG allows inbound port 22 only from the Jenkins agent's elastic IP. The production SG allows port 22 only from the Bastion's private IP — never from the public internet.<br><br>4. StrictHostKeyChecking + known_hosts: Both the Bastion and production host fingerprints are pre-seeded into a known_hosts file stored in Secrets Manager, preventing MITM during unattended pipeline runs.<br><br>5. Auto-closing tunnels: Used SSH -o ExitOnForwardFailure=yes and -o ServerAliveInterval flags so orphaned tunnel processes self-terminate if the Jenkins job fails or times out.",
+        image: "../assets/uat-prod-cicd",
+        link: "#"
+    },
+    {
         date: "2026.04.23",
         tag: "#AWS #Scaling",
         title: "Solving the 'Too Many Logs' Cost Crisis",
